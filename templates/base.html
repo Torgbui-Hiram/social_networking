@@ -1,0 +1,89 @@
+{% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <meta http-equiv='cache-control' content='no-cache'>
+            <meta http-equiv='expires' content='0'>
+            <meta http-equiv='pragma' content='no-cache'>
+            <title>Sociable</title>
+            <meta name="copyright" content="https://www.facebook.com/RiyadElberkawy"/>
+            <meta name="Description" content="sociable is a sociable platform, which enables the user to communicate with friends and public figures and its first and foremost goal is privacy">
+            <meta name="Keywords" content="sociable,sociable network,sociable platform,egyption sociable platform">
+            <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/Riyad.jpg' %}">
+            <link rel="stylesheet" href="{% static 'css/icofont/icofont.min.css' %}">
+            <link rel="stylesheet" href="{% static 'css/libs/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{% static 'css/libs/swiper-bundle.min.css' %}">
+            <link rel="stylesheet" href="{% static 'css/style.css' %}?version = 1.0">
+            <script src="{% static 'js/libs/jquery-3.5.1.slim.min.js' %}"></script>
+            <script src="{% static 'js/libs/ajax.min.js' %}"></script>
+        </head>
+        <body>
+            {% if request.user.is_authenticated %}
+                <header class="bg-light sticky-top">
+                    <div class="container">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 8px 0px;font-size: x-large">
+                            <div class="collapse navbar-collapse m-auto" id="navbarSupportedContent">
+                                <div class="d-flex col">
+                                    <a class="navbar-brand h1" href="/">Sociable</a>
+                                    <form class="form-inline m-auto my-2 my-lg-0 col" role="search" action="{% url 'search' %}">
+                                        <input class="form-control mr-sm-2 col" type="search" placeholder="Search" aria-label="Search" name="q">
+                                        <button class="btn btn-outline-dark btn-s-i my-2 my-sm-0" type="submit"><i class="icofont-search-2"></i></button>
+                                    </form>
+                                </div>
+                                <ul class="navbar-nav m-auto col container-fluid" style="flex-direction: row">
+                                    <li class="nav-item m-auto">
+                                        <a class="nav-link" href="{% url 'timeline_page' %}">
+                                            <i class="icofont-ui-home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item m-auto">
+                                        <a class="nav-link" href="{% url 'profile' user.username %}">
+                                            <i class="icofont-user-alt-4"></i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item m-auto">
+                                        <div class="dropdown nav-link">
+                                          <a class="btn" role="button" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                              <i class="icofont-alarm"></i>
+                                          </a>
+                                          <div class="dropdown-menu" aria-labelledby="notifications" style="left: -156px;">
+                                              <div style="text-align: end;width: 94%;"><a id="r-note" class="btn" style="color: #007bff">read all</a></div>
+                                              <div id="notifications-area" style="max-height: 450px;overflow: auto;"></div>
+                                          </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item m-auto dropdown">
+                                        <a class="btn nav-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+                                            <i class="icofont-ui-settings"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="{% url 'edit_profile' request.user.username %}">Edit Your Profile</a>
+                                            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+                <br>
+            {% endif %}
+
+            {% block content %}
+
+            {% endblock %}
+
+            <script>$audio=new Audio("{% static 'sound_effects/comment.mp3' %}");const $count_views="{% url 'count_views' %}",$creat_post='{% url "crate_post" %}',$remove_post='{% url "remove_post" %}',$remove_comment='{% url "remove_comment" %}',$get_comments='{% url "get_comments" %}',$creat_comment='{% url "creat_comment" %}',$like_btn='{% url "like_btn" %}',$follow='{% url "follow" %}',$get_notifications="{% url 'get_notifications' %}",$read_notifications="{% url 'read_notifications' %}",$hash="{% url 'get_hash_tag' 0  %}",$like_comment='{% url "like_comment" %}',$get_replies='{% url "get_replies" %}',$create_reply='{% url "create_reply" %}',$remove_reply='{% url "remove_reply" %}',$like_reply="{% url 'like_reply' %}";</script>
+
+
+            <script src="{% static 'js/libs/popper.min.js' %}" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="{% static 'js/libs/jquery.waypoints.min.js' %}"></script>
+            <script src="{% static 'js/libs/shortcuts/infinite.min.js' %}"></script>
+            <script src="{% static 'js/libs/swiper-bundle.min.js' %}"></script>
+            <script src="{% static 'js/libs/bootstrap.min.js' %}"></script>
+            <script src="{% static 'ajax/all_ajax.js'%}?version = 1.0"></script>
+            <script src="{% static 'js/main.js' %}?version = 1.0"></script>
+        </body>
+    </html>

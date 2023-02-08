@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>FB</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>SB</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/Riyad.jpg' %}">
+        <link rel="stylesheet" href="{% static 'css/icofont/icofont.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/libs/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="{% static 'js/libs/jquery-3.5.1.slim.min.js' %}"></script>
+        <script src="{% static 'js/libs/ajax.min.js' %}"></script>
+
+
+
+    </head>
+    <body>
+
+              {% block content %}
+              {% endblock %}
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="{% static 'js/libs/popper.min.js' %}"></script>
+        <script src="{% static 'js/libs/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/sign_up.js' %}"></script>
+    </body>
+</html>

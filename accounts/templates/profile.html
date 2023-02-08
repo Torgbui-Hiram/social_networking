@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="p_h container-fluid">
+        <div class="cover-page">
+            <div class="modal fade bd-example-modal-lg show" id="cover-{{ profile.user.username }}">
+                <div class="modal-dialog">
+                        <div class="modal-content" style="background: unset; border: 0;display: unset;top: 50px">
+                            <button type="button" class="close" data-dismiss="modal" style=" z-index: 1;width: fit-content; position: inherit;left: 0; color: #fff; top: 39px; outline: none;border-radius: 3px;background-color: #000000;padding: 3px 10px 11px;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <img src="{{ profile.cover.url }}" class="img-fluid" alt="profile.user.username"/>
+                        </div>
+                   </div>
+            </div>
+            <a href="#cover-{{ profile.user.username }}" data-toggle="modal">
+                <img src="{{ profile.cover.url }}">
+            </a>
+
+        </div>
+        <div class="user-p col">
+            <div class="modal fade bd-example-modal-lg show" id="picture-{{ profile.user.username }}">
+                <div class="modal-dialog">
+                        <div class="modal-content" style="background: unset; border: 0;display: unset;top: 50px">
+                            <button type="button" class="close" data-dismiss="modal" style="width: fit-content; position: inherit;left: 0; color: #fff; top: 39px; outline: none;border-radius: 3px;background-color: #000000;padding: 3px 10px 11px;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <img src="{{ profile.picture.url }}" class="img-fluid" alt="profile.user.username"/>
+                        </div>
+                   </div>
+            </div>
+            <a href="#picture-{{ profile.user.username }}" data-toggle="modal">
+                <img src="{{ profile.picture.url }}">
+            </a>
+
+        </div>
+        <div class="info-user container m-auto">
+            <div class="row row-cols-1 justify-content-center">
+                <div class="justify-content-center mb-2">
+                    <h2 class="m-auto" >{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
+                </div>
+                {% if request.user.is_authenticated %}
+                    {% if user != profile %}
+                        {% if request.user != profile.user %}
+                            <span>
+                                {% if request.user in profile.followers.all %}
+                                    <input class="btn btn-outline-primary follow-btn" data-key="{{ profile.id }}" type="submit" value="Unfollow">
+                                {% else %}
+                                    <input class="btn btn-primary follow-btn" data-key="{{ profile.id }}" type="submit" value="Follow">
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <div class="row mb-2">
+                    <div class="bio col-sm-6" style="overflow-wrap: anywhere;">
+                        <span>
+                            {% if profile.bio %}
+                                {{ profile.bio }}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row row-cols-md-2 row-cols-1 offset-md-1 m-auto">
+                        <div class="career col  row-cols-12 ">
+                            <div class="col">
+                                <h6>Gender: <span>{{ profile.user.gender }}</span></h6>
+                            </div>
+                            <div class="col">
+                                <h6>Birthday: <span>{{ profile.user.birthday|date:'M,d' }}</span></h6>
+                            </div>
+                        </div>
+                        <div class="career col row-cols-12">
+                            <div class="col" >
+                                <h6>Followers: <span><a  style="color: #007bff">{{ profile.followers.count }}</a></span></h6>
+                                <h6>Following: <span><a  style="color: #007bff">{{ profile.following.count }}</a></span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-md-4" style="margin-bottom: 25px;">
+                <div class="sticky-top"  style=" z-index: unset; top: 77px;">
+                    {% if pictures or covers or images %}
+                        <div class="photos row row-cols-2 container m-auto">
+                        <span class="col-12"><i class="icofont-ui-image" style="color: #4cd433;"></i> Photos</span>
+                        <br>
+                        {% for picture in pictures %}
+                            <img src="{{ media_url }}\picture\{{ picture }}" alt="photo">
+                        {% endfor %}
+                        {% for cover in covers %}
+                            <img src="{{ media_url }}\cover\{{ cover }}" alt="photo">
+                        {% endfor %}
+                        {% for image in images %}
+                            <img src="{{ media_url }}\posts\{{ image }}" alt="photo">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <br>
+            <div id="posts-list" class="container col">
+                {% if user == profile.user %}
+                    {% include 'create_post.html' %}
+                {% endif %}
+                <div class="row row-cols-1">
+                    <div id="time-line">
+                        {% for post in posts %}
+                            {% include 'post-box.html' %}
+                        {% endfor %}
+                    </div>
+                    {% if posts.has_next %}
+                        <a class="page-more-link" style="display: none" href="?page={{ posts.next_page_number }}">More</a>
+                    {% endif %}
+                    <div class="loading" style="display: none;">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
